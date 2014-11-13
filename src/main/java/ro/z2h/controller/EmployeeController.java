@@ -36,14 +36,14 @@ public class EmployeeController extends EmployeeServiceImpl {
     }
     @MyRequestMethod(methodType = "GET", urlPath = "/one")
 
-    public Employee getOneEmployee (){
+    public Employee getOneEmployee (String id){
 
 //        Employee employee= new Employee();
 //        employee.setFirstName("Test");
 //        return employee;
 //        return "oneRandomEmployee";
         EmployeeServiceImpl employeeService = new EmployeeServiceImpl();
-        Employee oneEmployee = employeeService.findOneEmployee(111l);
+        Employee oneEmployee = employeeService.findOneEmployee(Long.parseLong(id));
         return oneEmployee;
     }
 

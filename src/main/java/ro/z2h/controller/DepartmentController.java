@@ -1,5 +1,6 @@
 package ro.z2h.controller;
 
+import ro.z2h.Service.DepartmentServiceImpl;
 import ro.z2h.annotation.MyController;
 import ro.z2h.annotation.MyRequestMethod;
 import ro.z2h.domain.Department;
@@ -18,18 +19,21 @@ public class DepartmentController {
     public List<Department> getAllDepartments ()
     {
 
-        Department department1 = new Department();
-        department1.setId(1l);
-        department1.setDepartmentName("Dept 1");
-
-        Department department2 = new Department();
-        department2.setId(2l);
-        department2.setDepartmentName("Dept 2");
-
-        ArrayList<Department> departments = new ArrayList<Department>();
-        departments.add(department1);
-        departments.add(department2);
-
-        return departments;
+//        Department department1 = new Department();
+//        department1.setId(1l);
+//        department1.setDepartmentName("Dept 1");
+//
+//        Department department2 = new Department();
+//        department2.setId(2l);
+//        department2.setDepartmentName("Dept 2");
+//
+//        ArrayList<Department> departments = new ArrayList<Department>();
+//        departments.add(department1);
+//        departments.add(department2);
+//
+//        return departments;
+        DepartmentServiceImpl departmentService = new DepartmentServiceImpl();
+        List<Department> departmentsList = departmentService.findAllDepartment();
+        return departmentsList;
     }
 }

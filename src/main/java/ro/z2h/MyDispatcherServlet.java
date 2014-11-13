@@ -17,7 +17,10 @@ import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Computer on 11/11/2014.
@@ -54,10 +57,11 @@ public class MyDispatcherServlet extends HttpServlet {
                             mta.setControllerClass(aClass.getName());
                             mta.setMethodName(method.getName());
                             mta.setMethodType(methodAnnotation.methodType());
+                            mta.setMethodParameterType(method.getParameterTypes());
                             String key = ctrlannotation.urlPath() + methodAnnotation.urlPath();
                             hashMap.put(key, mta);
                             System.out.println(hashMap.get(key));
-                        }
+                                                    }
 
 
                     }
@@ -115,11 +119,20 @@ public class MyDispatcherServlet extends HttpServlet {
 
       MethodAttributes methodAttributes =  hashMap.get(pathInfo);
         try {
+
             if( methodAttributes!= null) {
                 Class<?> appControllerClass = Class.forName(methodAttributes.getControllerClass());
                 Object appControllerInstance = appControllerClass.newInstance();
-                Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName());
-                return controllerMethod.invoke(appControllerInstance);
+                Method controllerMethod = appControllerClass.getMethod(methodAttributes.getMethodName(), methodAttributes.getMethodParameterType());
+                Parameter[] realMethodParam = controllerMethod.getParameters();
+                List<String> methodParamValue = new ArrayList<String>();
+
+                for (Parameter paramType: realMethodParam){
+                    String parameter = req.getParameter(paramType.getName());
+                    methodParamValue.add(parameter);
+                }
+                Object response = controllerMethod.invoke(appControllerInstance, (String[]) methodParamValue.toArray(new String[0]));
+                return response;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

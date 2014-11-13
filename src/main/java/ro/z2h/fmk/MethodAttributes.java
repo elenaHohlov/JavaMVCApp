@@ -8,6 +8,7 @@ public class MethodAttributes {
     String controllerClass;
     String methodName;
     String methodType;
+    Class<?>[] methodParameterType;
 
     public String getControllerClass() {
         return controllerClass;
@@ -31,6 +32,14 @@ public class MethodAttributes {
 
     public void setMethodType(String methodType) {
         this.methodType = methodType;
+    }
+
+    public Class<?>[] getMethodParameterType() {
+        return methodParameterType;
+    }
+
+    public void setMethodParameterType(Class<?>[] methodParameterType) {
+        this.methodParameterType = methodParameterType;
     }
 
     @Override
